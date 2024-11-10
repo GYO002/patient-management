@@ -5,12 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     loadPatients();
 
-    // Toggle symptom selection
-    symptomButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            button.classList.toggle('active');
-        });
-    });
+    // PDF出力ボタンのクリックイベント
+    document.getElementById('export-pdf').addEventListener('click', exportToPDF);
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -20,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const temperature = document.getElementById('temperature').value || '未入力';
         const conditions = document.getElementById('condition').value.split(',').map(cond => cond.trim());
 
-        // 選択された症状を取得
         const symptoms = Array.from(symptomButtons)
             .filter(button => button.classList.contains('active'))
             .map(button => button.getAttribute('data-symptom'));
@@ -30,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const patient = { name, age, temperature, conditions, symptoms, severity, tested };
         savePatient(patient);
-        addPatientToList(patient);
+        refreshPatientList();
         form.reset();
         clearSymptomSelection();
     });
@@ -48,13 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
             patientItem.style.color = 'red';
         }
 
-        // 削除ボタンを追加
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = "削除";
-        deleteButton.classList.add('delete-button');
-        deleteButton.addEventListener('click', () => deletePatient(index));
-
-        // 詳細画面への遷移
+        // 詳細画面への遷移を追加（削除ボタン以外をクリックした場合）
         patientItem.addEventListener('click', (event) => {
             if (event.target !== deleteButton) {
                 const queryParams = new URLSearchParams({
@@ -70,15 +59,23 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // 削除ボタンの追加
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = '削除';
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', function () {
+            deletePatient(index);
+        });
+
         patientItem.appendChild(deleteButton);
         patientList.appendChild(patientItem);
     }
 
     function deletePatient(index) {
         const patients = JSON.parse(localStorage.getItem('patients')) || [];
-        patients.splice(index, 1); // インデックスに基づいて削除
-        localStorage.setItem('patients', JSON.stringify(patients)); // データを再保存
-        refreshPatientList(); // リストを更新
+        patients.splice(index, 1);
+        localStorage.setItem('patients', JSON.stringify(patients));
+        refreshPatientList();
     }
 
     function savePatient(patient) {
@@ -89,12 +86,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadPatients() {
         const patients = JSON.parse(localStorage.getItem('patients')) || [];
-        patients.forEach(addPatientToList);
+        patients.forEach((patient, index) => addPatientToList(patient, index));
     }
 
     function refreshPatientList() {
-        patientList.innerHTML = ''; // 現在のリストをクリア
-        loadPatients(); // データを再読み込みしてリストを更新
+        patientList.innerHTML = '';
+        loadPatients();
     }
 
     function assessSeverity(symptoms) {
@@ -105,5 +102,21 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             return '軽症';
         }
+    }
+
+    // PDF出力用の関数
+    function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.text('登録された患者一覧', 10, 10);
+        const patients = JSON.parse(localStorage.getItem('patients')) || [];
+
+        patients.forEach((patient, index) => {
+            const patientInfo = `名前: ${patient.name}, 年齢: ${patient.age}, 体温: ${patient.temperature}℃, 重症度: ${patient.severity}`;
+            doc.text(patientInfo, 10, 20 + (index * 10));
+        });
+
+        doc.save('患者一覧.pdf');
     }
 });

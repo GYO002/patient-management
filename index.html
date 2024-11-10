@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COVID-19 入居者管理アプリ</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> <!-- jsPDFライブラリの追加 -->
 </head>
 <body>
     <h1>COVID-19 入居者管理アプリ</h1>
@@ -41,10 +42,14 @@
 
             <button type="submit">登録</button>
         </form>
+
         <div id="patients-list">
             <h2>登録された患者</h2>
             <ul id="patientList"></ul>
         </div>
+
+        <!-- PDF出力ボタンを画面の下部に配置 -->
+        <button id="export-pdf">PDF出力</button>
     </div>
 
     <script src="script.js"></script>
