@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const name = document.getElementById('name').value;
         const age = document.getElementById('age').value;
+        const temperature = document.getElementById('temperature').value || '未入力';
         const conditions = document.getElementById('condition').value.split(',').map(cond => cond.trim());
 
         // 選択された症状を取得
@@ -27,40 +28,57 @@ document.addEventListener('DOMContentLoaded', function () {
         const severity = assessSeverity(symptoms);
         const tested = document.getElementById('tested').value;
 
-        const patient = { name, age, conditions, symptoms, severity, tested };
+        const patient = { name, age, temperature, conditions, symptoms, severity, tested };
         savePatient(patient);
         addPatientToList(patient);
         form.reset();
-        clearSymptomSelection(); // 選択状態をクリア
+        clearSymptomSelection();
     });
 
     function clearSymptomSelection() {
         symptomButtons.forEach(button => button.classList.remove('active'));
     }
 
-    function addPatientToList(patient) {
+    function addPatientToList(patient, index) {
         const patientItem = document.createElement('li');
         patientItem.classList.add('patient-item');
-        patientItem.textContent = `名前: ${patient.name}, 年齢: ${patient.age}, 重症度: ${patient.severity}`;
+        patientItem.textContent = `名前: ${patient.name}, 年齢: ${patient.age}, 体温: ${patient.temperature}℃, 重症度: ${patient.severity}`;
 
         if (patient.severity === '重症') {
             patientItem.style.color = 'red';
         }
 
-        // クリックイベントを追加して、詳細画面に遷移
-        patientItem.addEventListener('click', () => {
-            const queryParams = new URLSearchParams({
-                name: patient.name,
-                age: patient.age,
-                conditions: patient.conditions.join(','),
-                symptoms: patient.symptoms.join(','),
-                severity: patient.severity,
-                tested: patient.tested
-            });
-            window.location.href = `detail.html?${queryParams.toString()}`;
+        // 削除ボタンを追加
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = "削除";
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', () => deletePatient(index));
+
+        // 詳細画面への遷移
+        patientItem.addEventListener('click', (event) => {
+            if (event.target !== deleteButton) {
+                const queryParams = new URLSearchParams({
+                    name: patient.name,
+                    age: patient.age,
+                    temperature: patient.temperature,
+                    conditions: patient.conditions.join(','),
+                    symptoms: patient.symptoms.join(','),
+                    severity: patient.severity,
+                    tested: patient.tested
+                });
+                window.location.href = `detail.html?${queryParams.toString()}`;
+            }
         });
 
+        patientItem.appendChild(deleteButton);
         patientList.appendChild(patientItem);
+    }
+
+    function deletePatient(index) {
+        const patients = JSON.parse(localStorage.getItem('patients')) || [];
+        patients.splice(index, 1); // インデックスに基づいて削除
+        localStorage.setItem('patients', JSON.stringify(patients)); // データを再保存
+        refreshPatientList(); // リストを更新
     }
 
     function savePatient(patient) {
@@ -72,6 +90,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadPatients() {
         const patients = JSON.parse(localStorage.getItem('patients')) || [];
         patients.forEach(addPatientToList);
+    }
+
+    function refreshPatientList() {
+        patientList.innerHTML = ''; // 現在のリストをクリア
+        loadPatients(); // データを再読み込みしてリストを更新
     }
 
     function assessSeverity(symptoms) {

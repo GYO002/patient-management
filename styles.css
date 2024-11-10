@@ -89,7 +89,7 @@ input:focus, select:focus {
 
 .symptom-toggle.active {
     background-color: #007bff;
-    color: #ffffff;
+    color: #333;
     border-color: #007bff;
 }
 
@@ -116,28 +116,30 @@ button:hover {
 }
 
 /* Patient List Styling */
-.patient-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 15px;
-    text-align: left;
-}
-
 .patient-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 0.95em;
+}
+
+/* Smaller Delete Button on the Right */
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 3px 5px; /* 横幅を小さくする */
+    border-radius: 3px;
+    font-size: 0.75em;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50px; /* 横幅を固定 */
+    text-align: center;
+    margin-left: auto; /* ボタンを右端に配置 */
 }
 
-.patient-item:hover {
-    background-color: #e9ecef;
-}
-
-.patient-item .patient-severity {
-    font-weight: bold;
-    color: #ff0000; /* 重症は赤で表示 */
+.delete-button:hover {
+    background-color: #c82333;
 }
