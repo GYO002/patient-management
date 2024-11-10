@@ -40,11 +40,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addPatientToList(patient) {
         const patientItem = document.createElement('li');
+        patientItem.classList.add('patient-item');
         patientItem.textContent = `名前: ${patient.name}, 年齢: ${patient.age}, 重症度: ${patient.severity}`;
 
         if (patient.severity === '重症') {
             patientItem.style.color = 'red';
         }
+
+        // クリックイベントを追加して、詳細画面に遷移
+        patientItem.addEventListener('click', () => {
+            const queryParams = new URLSearchParams({
+                name: patient.name,
+                age: patient.age,
+                conditions: patient.conditions.join(','),
+                symptoms: patient.symptoms.join(','),
+                severity: patient.severity,
+                tested: patient.tested
+            });
+            window.location.href = `detail.html?${queryParams.toString()}`;
+        });
 
         patientList.appendChild(patientItem);
     }
