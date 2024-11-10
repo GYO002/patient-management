@@ -1,0 +1,116 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* App Container */
+#app {
+    width: 600px;
+    margin-top: 20px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Titles */
+h1 {
+    font-size: 1.8em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+/* Labels */
+label {
+    display: block;
+    font-weight: bold;
+    margin: 15px 0 5px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* Input Fields */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Symptom Toggle Buttons */
+#symptoms-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.symptom-toggle {
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #333; /* 常に黒い文字色を設定 */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.symptom-toggle.active {
+    background-color: #007bff;
+    color: #333; /* アクティブ状態でも黒色 */
+    border-color: #007bff;
+}
+
+.symptom-toggle:hover {
+    background-color: #e9ecef;
+}
+
+/* Button Styling */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

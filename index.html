@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 患者管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>COVID-19 患者管理アプリ</h1>
+    <div id="app">
+        <h2>患者情報の登録</h2>
+        <form id="patient-form">
+            <label for="name">名前:</label>
+            <input type="text" id="name" required>
+            
+            <label for="age">年齢:</label>
+            <input type="number" id="age" required>
+
+            <label for="condition">既往歴:</label>
+            <input type="text" id="condition" placeholder="既往歴をカンマで区切って入力してください">
+            
+            <label>症状:</label>
+            <div id="symptoms-container">
+                <button type="button" class="symptom-toggle" data-symptom="fever">発熱</button>
+                <button type="button" class="symptom-toggle" data-symptom="cough">咳</button>
+                <button type="button" class="symptom-toggle" data-symptom="difficulty_breathing">呼吸困難</button>
+                <button type="button" class="symptom-toggle" data-symptom="fatigue">倦怠感</button>
+                <button type="button" class="symptom-toggle" data-symptom="chest_pain">胸痛</button>
+            </div>
+
+            <label for="tested">検査実施:</label>
+            <select id="tested">
+                <option value="not_tested">未検査</option>
+                <option value="tested_positive">陽性</option>
+                <option value="tested_negative">陰性</option>
+            </select>
+
+            <button type="submit">登録</button>
+        </form>
+        <div id="patients-list">
+            <h2>登録された患者</h2>
+            <ul id="patientList"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

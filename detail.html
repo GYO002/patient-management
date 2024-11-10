@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 患者詳細情報</title>
+    <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+    <div id="detail-container">
+        <h1>患者詳細情報</h1>
+        <div id="patient-detail">
+            <p><strong>名前:</strong> <span id="detail-name"></span></p>
+            <p><strong>年齢:</strong> <span id="detail-age"></span></p>
+            <p><strong>既往歴:</strong> <span id="detail-conditions"></span></p>
+            <p><strong>症状:</strong> <span id="detail-symptoms"></span></p>
+            <p><strong>重症度:</strong> <span id="detail-severity"></span></p>
+            <p><strong>検査結果:</strong> <span id="detail-tested"></span></p>
+        </div>
+        <button onclick="goBack()">戻る</button>
+    </div>
+    <script>
+        // URLパラメータから患者データを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');
+        const age = urlParams.get('age');
+        const conditions = urlParams.get('conditions').split(',');
+        const symptoms = urlParams.get('symptoms').split(',');
+        const severity = urlParams.get('severity');
+        const tested = urlParams.get('tested');
+
+        // 画面にデータを表示
+        document.getElementById('detail-name').textContent = name;
+        document.getElementById('detail-age').textContent = age;
+        document.getElementById('detail-conditions').textContent = conditions.join(', ');
+        document.getElementById('detail-symptoms').textContent = symptoms.join(', ');
+        document.getElementById('detail-severity').textContent = severity;
+        document.getElementById('detail-tested').textContent = tested === 'not_tested' ? '未検査' : (tested === 'tested_positive' ? '陽性' : '陰性');
+
+        // 戻るボタンの動作
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
