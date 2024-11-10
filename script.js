@@ -111,18 +111,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // PDF出力用の関数
-    function exportToPDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+  function exportToPDF() {
+    const doc = new jsPDF();
+    doc.setFont("NotoSansJP"); // 日本語フォントを設定
+    doc.setFontSize(12);
 
-        doc.text('登録された患者一覧', 10, 10);
-        const patients = JSON.parse(localStorage.getItem('patients')) || [];
+    doc.text('登録された患者一覧', 10, 10);
+    const patients = JSON.parse(localStorage.getItem('patients')) || [];
 
-        patients.forEach((patient, index) => {
-            const patientInfo = `名前: ${patient.name}, 年齢: ${patient.age}, 体温: ${patient.temperature}℃, 重症度: ${patient.severity}`;
-            doc.text(patientInfo, 10, 20 + (index * 10));
-        });
+    patients.forEach((patient, index) => {
+        const patientInfo = `名前: ${patient.name}, 年齢: ${patient.age}, 体温: ${patient.temperature}℃, 重症度: ${patient.severity}`;
+        doc.text(patientInfo, 10, 20 + (index * 10));
+    });
 
-        doc.save('患者一覧.pdf');
-    }
+    doc.save('患者一覧.pdf');
+}
 });
