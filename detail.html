@@ -10,62 +10,39 @@
     <div id="detail-container">
         <h1>患者詳細情報</h1>
         <div id="patient-detail">
-            <div class="detail-item">
-                <strong>名前:</strong> <span id="detail-name"></span>
-            </div>
-            <div class="detail-item">
-                <strong>年齢:</strong> <span id="detail-age"></span>
-            </div>
-            <div class="detail-item">
-                <strong>既往歴:</strong> <span id="detail-conditions"></span>
-            </div>
-            <div class="detail-item">
-                <strong>症状:</strong> <span id="detail-symptoms"></span>
-            </div>
-            <div class="detail-item">
-                <strong>重症度:</strong> <span id="detail-severity"></span>
-            </div>
-            <div class="detail-item">
-                <strong>検査結果:</strong> <span id="detail-tested"></span>
-            </div>
+            <p><strong>名前:</strong> <span id="detail-name"></span></p>
+            <p><strong>年齢:</strong> <span id="detail-age"></span></p>
+            <p><strong>既往歴:</strong> <span id="detail-conditions"></span></p>
+            <p><strong>症状:</strong> <span id="detail-symptoms"></span></p>
+            <p><strong>重症度:</strong> <span id="detail-severity"></span></p>
+            <p><strong>検査結果:</strong> <span id="detail-tested"></span></p>
         </div>
-        <button onclick="goBack()" class="back-button">戻る</button>
+        
+        <!-- 経過観察の記録フォーム -->
+        <div id="observation-form">
+            <h2>経過観察の記録</h2>
+            <label for="observation-date">日付:</label>
+            <input type="date" id="observation-date" required>
+            
+            <label for="observation-temperature">体温 (℃):</label>
+            <input type="number" id="observation-temperature" step="0.1" min="35" max="42" required>
+            
+            <label for="observation-symptom">症状:</label>
+            <input type="text" id="observation-symptom" placeholder="例: 咳, 倦怠感">
+
+            <button id="add-observation">追加</button>
+        </div>
+
+        <!-- 経過観察データの表示 -->
+        <div id="observations">
+            <h2>経過観察の記録一覧</h2>
+            <ul id="observation-list"></ul>
+        </div>
+
+        <!-- 戻るボタン -->
+        <button id="back-button">戻る</button>
     </div>
-    <script>
-        // URLパラメータから患者データを取得
-        const urlParams = new URLSearchParams(window.location.search);
-        const name = urlParams.get('name');
-        const age = urlParams.get('age');
-        const conditions = urlParams.get('conditions').split(',');
-        const symptoms = urlParams.get('symptoms').split(',');
-        const severity = urlParams.get('severity');
-        const tested = urlParams.get('tested');
 
-        // 英語の症状コードを日本語に変換するマッピング
-        const symptomTranslation = {
-            fever: "発熱",
-            cough: "咳",
-            difficulty_breathing: "呼吸困難",
-            fatigue: "倦怠感",
-            chest_pain: "胸痛"
-        };
-
-        // 症状を日本語に変換
-        const translatedSymptoms = symptoms.map(symptom => symptomTranslation[symptom] || symptom);
-
-        // 画面にデータを表示
-        document.getElementById('detail-name').textContent = name;
-        document.getElementById('detail-age').textContent = age;
-        document.getElementById('detail-conditions').textContent = conditions.join(', ');
-        document.getElementById('detail-symptoms').textContent = translatedSymptoms.join(', ');
-        document.getElementById('detail-severity').textContent = severity;
-        document.getElementById('detail-tested').textContent = 
-            tested === 'not_tested' ? '未検査' : (tested === 'tested_positive' ? '陽性' : '陰性');
-
-        // 戻るボタンの動作
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+    <script src="detail.js"></script>
 </body>
 </html>

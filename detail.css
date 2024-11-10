@@ -1,10 +1,11 @@
-/* 基本設定 */
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Body Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f6f8;
@@ -13,58 +14,79 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    margin: 0;
+    padding: 20px;
 }
 
-/* コンテナのスタイル */
+/* Container Styling */
 #detail-container {
-    width: 90%;
-    max-width: 500px;
-    background-color: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* タイトルスタイル */
+/* Title Styling */
 h1 {
     font-size: 1.8em;
     color: #007bff;
     margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Section Titles */
+h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 15px;
     border-bottom: 2px solid #007bff;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
-/* 患者情報の詳細項目 */
-.detail-item {
+/* Patient Details Styling */
+#patient-detail p {
+    margin-bottom: 10px;
     font-size: 1em;
-    margin: 15px 0;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* 強調表示のためのスタイル */
-.detail-item strong {
-    font-weight: bold;
     color: #555;
 }
 
-/* 重症度を強調表示 */
-#detail-severity {
+#patient-detail p strong {
     font-weight: bold;
-    color: #ff4d4d; /* 重症度は赤色で表示 */
+    color: #333;
 }
 
-/* 戻るボタンのスタイル */
-.back-button {
+/* Observation Form Styling */
+#observation-form {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#observation-form label {
+    display: block;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+#observation-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+#observation-form button {
     width: 100%;
     padding: 12px;
-    margin-top: 20px;
     background-color: #007bff;
     color: white;
     font-size: 1em;
@@ -75,6 +97,46 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.back-button:hover {
+#observation-form button:hover {
     background-color: #0056b3;
+}
+
+/* Observations List Styling */
+#observations {
+    margin-top: 20px;
+}
+
+#observation-list {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+#observation-list li {
+    padding: 10px;
+    background-color: #f1f3f5;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+/* Back Button Styling */
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #5a6268;
 }
