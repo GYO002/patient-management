@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const temperature = document.getElementById('temperature').value || '未入力';
         const conditions = document.getElementById('condition').value.split(',').map(cond => cond.trim());
 
+        // 選択された症状を取得
         const symptoms = Array.from(symptomButtons)
             .filter(button => button.classList.contains('active'))
             .map(button => button.getAttribute('data-symptom'));
@@ -34,6 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
         symptomButtons.forEach(button => button.classList.remove('active'));
     }
 
+    // ボタンのイベントリスナー設定
+    symptomButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            button.classList.toggle('active'); // ボタンを押すとアクティブ状態が切り替わる
+        });
+    });
+
     function addPatientToList(patient, index) {
         const patientItem = document.createElement('li');
         patientItem.classList.add('patient-item');
@@ -43,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
             patientItem.style.color = 'red';
         }
 
-        // 詳細画面への遷移を追加（削除ボタン以外をクリックした場合）
         patientItem.addEventListener('click', (event) => {
             if (event.target !== deleteButton) {
                 const queryParams = new URLSearchParams({
@@ -59,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // 削除ボタンの追加
         const deleteButton = document.createElement('button');
         deleteButton.textContent = '削除';
         deleteButton.classList.add('delete-button');
